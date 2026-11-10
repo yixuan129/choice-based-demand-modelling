@@ -1,0 +1,24 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.venv/
+venv/
+.env
+.DS_Store
+.idea/
+.vscode/
+
+# Generated demo outputs
+data/synthetic_choice_data.csv
+outputs/
+
+# Never commit operational or customer data
+data/raw/
+data/private/
+*.parquet
+*.feather
+*.pickle
+*.pkl
+
