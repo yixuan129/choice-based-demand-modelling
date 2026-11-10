@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import altair as alt
 import pandas as pd
 import streamlit as st
 
@@ -56,7 +57,43 @@ alternatives["Nested Logit"] = nested_logit_probabilities(
 
 st.subheader("Predicted allocation of demand")
 chart_data = alternatives.set_index("alternative")[["MNL", "Nested Logit"]]
-st.bar_chart(chart_data, y_label="Choice probability")
+plot_data = chart_data.reset_index().melt(
+    id_vars="alternative",
+    var_name="Model",
+    value_name="Choice probability",
+)
+chart = (
+    alt.Chart(plot_data)
+    .mark_bar()
+    .encode(
+        x=alt.X(
+            "alternative:N",
+            title=None,
+            sort=alternatives["alternative"].tolist(),
+            axis=alt.Axis(labelAngle=-20),
+        ),
+        xOffset=alt.XOffset("Model:N"),
+        y=alt.Y(
+            "Choice probability:Q",
+            axis=alt.Axis(format="%"),
+            scale=alt.Scale(domain=[0, 0.55]),
+        ),
+        color=alt.Color(
+            "Model:N",
+            scale=alt.Scale(
+                domain=["MNL", "Nested Logit"],
+                range=["#2563EB", "#0F766E"],
+            ),
+        ),
+        tooltip=[
+            alt.Tooltip("alternative:N", title="Alternative"),
+            alt.Tooltip("Model:N"),
+            alt.Tooltip("Choice probability:Q", format=".1%"),
+        ],
+    )
+    .properties(height=360)
+)
+st.altair_chart(chart, use_container_width=True)
 
 display = alternatives[
     ["alternative", "site_id", "price", "awning", "availability", "MNL", "Nested Logit"]

@@ -4,6 +4,8 @@
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
+**[Open the interactive Streamlit demonstration](https://choice-based-demand-modelling.streamlit.app/)**
+
 A privacy-safe, reproducible demonstration of booking-level customer choice
 modelling. The project shows how feasible alternatives can be constructed for
 each booking, how Multinomial Logit (MNL) and site-based Nested Logit (NL)
